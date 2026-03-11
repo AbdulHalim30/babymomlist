@@ -1424,20 +1424,38 @@
 
     <script>
       function showPage(id) {
-        document.getElementById("home").classList.add("hidden");
-        document
-          .querySelectorAll(".page")
-          .forEach((p) => p.classList.remove("active"));
-        document.getElementById("page-" + id).classList.add("active");
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        document.getElementById('home').classList.add('hidden');
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('page-' + id).classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Daftarkan ke history browser
+        history.pushState({ page: id }, '', '#' + id);
       }
+
       function showHome() {
-        document.getElementById("home").classList.remove("hidden");
-        document
-          .querySelectorAll(".page")
-          .forEach((p) => p.classList.remove("active"));
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        document.getElementById('home').classList.remove('hidden');
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Daftarkan ke history browser
+        history.pushState({ page: 'home' }, '', '#');
       }
+
+      // Tangkap tombol back HP
+      window.addEventListener('popstate', function(e) {
+        if (e.state && e.state.page && e.state.page !== 'home') {
+          // Masih di halaman produk → tidak perlu apa-apa, browser sudah handle
+        } else {
+          // Kembali ke home
+          document.getElementById('home').classList.remove('hidden');
+          document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+
+      // Set state awal
+      history.replaceState({ page: 'home' }, '', '#');
     </script>
   </body>
 </html>
