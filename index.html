@@ -1522,32 +1522,28 @@
     </div>
 
     <script>
-      // Selalu tampilkan, kecuali di browser normal
-      const ua = navigator.userAgent.toLowerCase();
-      const isBrowser =
-        ua.includes("chrome") ||
-        ua.includes("firefox") ||
-        (ua.includes("safari") && ua.includes("version"));
-      const isInApp = !isBrowser || /tiktok|musical_ly|bytedance/i.test(ua);
-
-      if (isInApp) {
-        const banner = document.createElement("div");
-        banner.style.cssText = `
-      position: fixed; bottom: 20px; left: 16px; right: 16px;
-      background: #3d2c2c; color: white;
-      padding: 14px 20px; text-align: center;
-      font-size: 13px; z-index: 9999;
-      border-radius: 14px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-      font-family: 'DM Sans', sans-serif;
-      line-height: 1.6;
-    `;
-        banner.innerHTML = `
-      🌐 Untuk buka di browser —<br>
-      tap <b>···</b> pojok kanan atas lalu pilih <b>"Open in browser"</b>
-    `;
-        document.body.appendChild(banner);
-      }
+      // Banner selalu tampil
+      const banner = document.createElement("div");
+      banner.style.cssText = `
+        position: fixed; bottom: 20px; left: 16px; right: 16px;
+        background: #3d2c2c; color: white;
+        padding: 14px 20px;
+        font-size: 13px; z-index: 9999;
+        border-radius: 14px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        font-family: 'DM Sans', sans-serif;
+        line-height: 1.6;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      `;
+      banner.innerHTML = `
+        <span>🌐 Tap <b>···</b> pojok kanan atas → pilih <b>"Open in browser"</b></span>
+        <span onclick="this.parentElement.remove()" 
+        style="cursor:pointer; font-size:18px; flex-shrink:0">✕</span>
+      `;
+      document.body.appendChild(banner);
 
       function showPage(id) {
         document.getElementById("home").classList.add("hidden");
